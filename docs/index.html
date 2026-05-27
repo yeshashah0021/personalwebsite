@@ -1,27 +1,494 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Welcome to my website!</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yesha Shah</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a08;
+    --bg2: #111110;
+    --cream: #f0ebe0;
+    --cream-dim: #b8b2a4;
+    --gold: #c9a96e;
+    --gold-dim: #7a6340;
+    --border: rgba(240,235,224,0.08);
+    --border-hover: rgba(201,169,110,0.3);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+ 
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.5rem 3rem;
+    background: rgba(10,10,8,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    color: var(--cream);
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+ 
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 0 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-grid-line {
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 1px;
+    background: var(--border);
+  }
+  .hero-grid-line:nth-child(1) { left: 25%; }
+  .hero-grid-line:nth-child(2) { left: 50%; }
+  .hero-grid-line:nth-child(3) { left: 75%; }
+ 
+  .hero-content {
+    position: relative; z-index: 2;
+    max-width: 900px;
+  }
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 9vw, 8rem);
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    color: var(--cream);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.35s forwards;
+  }
+  .hero-name em {
+    font-style: italic;
+    color: var(--gold);
+  }
+  .hero-tagline {
+    font-size: 1.05rem;
+    font-weight: 300;
+    color: var(--cream-dim);
+    max-width: 520px;
+    line-height: 1.7;
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.5s forwards;
+  }
+  .hero-ctas {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.65s forwards;
+  }
+  .btn-primary {
+    display: inline-block;
+    padding: 0.85rem 2rem;
+    background: var(--gold);
+    color: var(--bg);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: var(--cream); transform: translateY(-2px); }
+  .btn-outline {
+    display: inline-block;
+    padding: 0.85rem 2rem;
+    border: 1px solid var(--border-hover);
+    color: var(--cream-dim);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s, transform 0.15s;
+  }
+  .btn-outline:hover { border-color: var(--cream); color: var(--cream); transform: translateY(-2px); }
+ 
+  .hero-scroll {
+    position: absolute;
+    bottom: 2.5rem; left: 3rem;
+    display: flex; align-items: center; gap: 0.75rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    opacity: 0;
+    animation: fadeUp 1s 1s forwards;
+  }
+  .hero-scroll::before {
+    content: '';
+    display: block;
+    width: 40px; height: 1px;
+    background: var(--gold-dim);
+  }
+ 
+  /* ── STATS ── */
+  .stats {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .stat-item {
+    padding: 3rem 3rem;
+    border-right: 1px solid var(--border);
+    opacity: 0;
+    animation: fadeUp 0.7s forwards;
+  }
+  .stat-item:nth-child(1) { animation-delay: 0.1s; }
+  .stat-item:nth-child(2) { animation-delay: 0.2s; }
+  .stat-item:nth-child(3) { animation-delay: 0.3s; }
+  .stat-item:nth-child(4) { animation-delay: 0.4s; border-right: none; }
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.75rem;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+  }
+ 
+  /* ── SECTION ── */
+  section { padding: 6rem 3rem; }
+  .section-header {
+    display: flex; align-items: center; gap: 1.5rem;
+    margin-bottom: 4rem;
+  }
+  .section-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    white-space: nowrap;
+  }
+  .section-line {
+    flex: 1; height: 1px;
+    background: var(--border);
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--cream);
+    margin-bottom: 1.5rem;
+  }
+  .section-title em { font-style: italic; color: var(--gold); }
+ 
+  /* ── ABOUT PREVIEW ── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+  .about-text p {
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: var(--cream-dim);
+    margin-bottom: 1.5rem;
+  }
+  .about-text p strong {
+    color: var(--cream);
+    font-weight: 400;
+  }
+  .skills-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+  .skill-card {
+    background: var(--bg2);
+    padding: 1.5rem;
+    transition: background 0.2s;
+  }
+  .skill-card:hover { background: #18180f; }
+  .skill-card-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.6rem;
+  }
+  .skill-card-items {
+    font-size: 0.85rem;
+    color: var(--cream-dim);
+    line-height: 1.7;
+  }
+ 
+  /* ── EXPERIENCE PREVIEW ── */
+  .exp-list { display: flex; flex-direction: column; gap: 0; }
+  .exp-row {
+    display: grid;
+    grid-template-columns: 180px 1fr auto;
+    align-items: start;
+    gap: 2rem;
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.2s;
+    cursor: default;
+  }
+  .exp-row:first-child { border-top: 1px solid var(--border); }
+  .exp-row:hover { background: rgba(201,169,110,0.03); padding-left: 0.5rem; padding-right: 0.5rem; }
+  .exp-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    color: var(--gold-dim);
+    padding-top: 0.2rem;
+  }
+  .exp-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: var(--cream);
+    margin-bottom: 0.3rem;
+  }
+  .exp-org {
+    font-size: 0.8rem;
+    color: var(--cream-dim);
+  }
+  .exp-arrow {
+    font-size: 1rem;
+    color: var(--gold-dim);
+    padding-top: 0.2rem;
+    transition: color 0.2s, transform 0.2s;
+  }
+  .exp-row:hover .exp-arrow { color: var(--gold); transform: translateX(4px); }
+ 
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .footer-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    color: var(--cream-dim);
+    text-transform: uppercase;
+  }
+  .footer-links { display: flex; gap: 2rem; }
+  .footer-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--gold); }
+ 
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+ 
+  @media (max-width: 768px) {
+    nav { padding: 1.25rem 1.5rem; }
+    .hero { padding: 0 1.5rem; }
+    .stats { grid-template-columns: 1fr 1fr; }
+    .stat-item { padding: 2rem 1.5rem; }
+    section { padding: 4rem 1.5rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .skills-grid { grid-template-columns: 1fr; }
+    .exp-row { grid-template-columns: 1fr; gap: 0.5rem; }
+    footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+  }
+</style>
 </head>
-
-<body class="home-bg">
-  <nav class="navbar">
-    <div class="tabs">
-      <a href="index.html">Home</a>
-      <a href="aboutme.html">About Me</a>
-      <a href="experiences.html">Experiences</a>
-      <a href="contact.html">Contact</a>
+<body>
+ 
+<nav>
+  <a class="nav-logo" href="index.html">Yesha Shah</a>
+  <ul class="nav-links">
+    <li><a href="aboutme.html">About</a></li>
+    <li><a href="experiences.html">Experience</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+ 
+<section class="hero">
+  <div class="hero-grid-line"></div>
+  <div class="hero-grid-line"></div>
+  <div class="hero-grid-line"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">CS &amp; Finance · Temple University · Class of 2028</p>
+    <h1 class="hero-name">Yesha<br><em>Shah.</em></h1>
+    <p class="hero-tagline">AI researcher, front-end developer, and data analyst building at the intersection of technology and finance.</p>
+    <div class="hero-ctas">
+      <a href="experiences.html" class="btn-primary">View Experience</a>
+      <a href="contact.html" class="btn-outline">Get in Touch</a>
     </div>
-  </nav>
-
-  <div class="name">
-    <h1>
-      Hi, my name is <span class="neon-name">Yesha Shah</span>.
-      Welcome to my website!
-    </h1>
   </div>
-
+  <p class="hero-scroll">Scroll to explore</p>
+</section>
+ 
+<div class="stats">
+  <div class="stat-item">
+    <div class="stat-number">3+</div>
+    <div class="stat-label">Active Roles</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">385+</div>
+    <div class="stat-label">Energy Accounts Managed</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">500+</div>
+    <div class="stat-label">Hackathon Participants</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number">$2K+</div>
+    <div class="stat-label">Sponsorships Secured</div>
+  </div>
+</div>
+ 
+<section id="about">
+  <div class="section-header">
+    <span class="section-tag">01 — About</span>
+    <div class="section-line"></div>
+  </div>
+  <div class="about-grid">
+    <div class="about-text">
+      <h2 class="section-title">Building at the<br><em>intersection.</em></h2>
+      <p>I'm a Computer Science and Finance double major at Temple University with a passion for applying technology to real-world problems — from modeling AI architectures in research labs to managing multimillion-dollar energy datasets.</p>
+      <p>I bring a rare combination of <strong>technical depth</strong> and <strong>financial literacy</strong>, backed by hands-on experience across research, development, and leadership.</p>
+      <a href="aboutme.html" class="btn-outline" style="margin-top:1rem;">Full Profile →</a>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-card-label">Languages</div>
+        <div class="skill-card-items">Python · Swift · HTML/CSS · Java · VisualBasics</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-label">Technical</div>
+        <div class="skill-card-items">Ignition · EnergyCAP · Excel · API Integration</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-label">Domains</div>
+        <div class="skill-card-items">AI/ML Research · Frontend Dev · Data Analysis · Finance</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-label">Education</div>
+        <div class="skill-card-items">B.S. Computer Science · B.A. Kathak Dance · Temple '28</div>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<section id="experience" style="padding-top:0;">
+  <div class="section-header">
+    <span class="section-tag">02 — Experience</span>
+    <div class="section-line"></div>
+  </div>
+  <div class="exp-list">
+    <div class="exp-row">
+      <div class="exp-date">Aug 2025 – Present</div>
+      <div>
+        <div class="exp-title">AI Researcher</div>
+        <div class="exp-org">Undergraduate Research Assistant · Dr. Lee Hayan</div>
+      </div>
+      <div class="exp-arrow">→</div>
+    </div>
+    <div class="exp-row">
+      <div class="exp-date">Apr 2025 – Present</div>
+      <div>
+        <div class="exp-title">Front-End Developer &amp; Energy Analyst</div>
+        <div class="exp-org">Temple University Facilities Management</div>
+      </div>
+      <div class="exp-arrow">→</div>
+    </div>
+    <div class="exp-row">
+      <div class="exp-date">May 2025 – Present</div>
+      <div>
+        <div class="exp-title">Outreach Team — Owl Hackathon</div>
+        <div class="exp-org">E-Board Member</div>
+      </div>
+      <div class="exp-arrow">→</div>
+    </div>
+    <div class="exp-row">
+      <div class="exp-date">Sep 2024 – Present</div>
+      <div>
+        <div class="exp-title">Financial Advisor &amp; PR Chair</div>
+        <div class="exp-org">Philthy RAAS</div>
+      </div>
+      <div class="exp-arrow">→</div>
+    </div>
+  </div>
+  <div style="margin-top:2.5rem;">
+    <a href="experiences.html" class="btn-outline">All Experiences →</a>
+  </div>
+</section>
+ 
+<footer>
+  <span class="footer-name">Yesha Shah · 2025</span>
+  <div class="footer-links">
+    <a href="mailto:yeshashah0021@gmail.com">Email</a>
+    <a href="https://linkedin.com/in/yesha-shah0021" target="_blank">LinkedIn</a>
+    <a href="https://github.com/yeshashah0021" target="_blank">GitHub</a>
+  </div>
+</footer>
+ 
 </body>
 </html>
